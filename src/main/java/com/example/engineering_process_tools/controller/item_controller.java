@@ -1,37 +1,84 @@
 package com.example.engineering_process_tools.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.engineering_process_tools.dao.item_service;
+import com.example.engineering_process_tools.model.item;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/item")
 public class item_controller {
 
-    @GetMapping
-    public String getItem()
+    @Autowired
+    item_service item_service;
+
+
+    @GetMapping()
+    public List getAllItems()
     {
-        return "http GET reqeust was sent";
+       return item_service.getAllItems();
     }
 
-    @PostMapping
-    public String createItem()
+    @GetMapping("item/{id}")
+    public item getItembyID(@PathVariable(value="id") int id)
     {
-        return "http POST reqeust was sent";
+        return item_service.getItembyID(id);
     }
 
-    @PutMapping
-    public String updateItem()
+    @GetMapping("item/itemName")
+    public item getItembyname(@PathVariable(value="name") String itemName)
     {
-        return "http PUT reqeust was sent";
+        return item_service.getItembyName(itemName);
     }
 
-    @DeleteMapping
-    public String deleteItem()
+    @PostMapping()
+    public item addItem(@RequestBody item item)
     {
-        return "http DELETE reqeust was sent";
+        return item_service.addItem(item);
     }
+
+    @PutMapping()
+    public item updateitem(@RequestBody item item)
+    {
+        return item_service.updateitem(item);
+    }
+
+    @DeleteMapping("/deleteitem/{id}")
+    public AddResponse deleteitem(@PathVariable(value = "id")int id)
+    {
+        return item_service.deleteitem(id);
+    }
+
+
+//   @GetMapping(path="/{itemID}")
+//   public String getItem(@PathVariable String itemID)
+//    {
+//        return "http GET reqeust was sent for itemID:" + itemID;
+//    }
+//
+//    @GetMapping
+//    public String getItemList()
+//    {
+//        return "http GET reqeust was sent";
+//    }
+//
+//    @PostMapping
+//    public String createItem()
+//    {
+//        return "http POST reqeust was sent";
+//    }
+//
+//    @PutMapping
+//    public String updateItem()
+//    {
+//        return "http PUT reqeust was sent";
+//    }
+//
+//    @DeleteMapping
+//    public String deleteItem()
+//    {
+//        return "http DELETE reqeust was sent";
+//    }
 }
